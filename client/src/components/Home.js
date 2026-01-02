@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { API_BASE } from '../config';
 import './Home.css';
-
-const API_BASE = 'http://localhost:5001/api';
 
 function Home() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);

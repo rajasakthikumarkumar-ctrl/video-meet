@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { API_BASE } from '../config';
 import './Form.css';
-
-const API_BASE = 'http://localhost:5001/api';
 
 function JoinRoom() {
   const navigate = useNavigate();

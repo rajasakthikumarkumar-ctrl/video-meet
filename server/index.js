@@ -4,15 +4,29 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://video-meet-aj54.onrender.com', 'http://localhost:3000', 'http://localhost:3001']
+    : "*",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
+    origin: process.env.NODE_ENV === 'production' 
+      ? ['https://video-meet-aj54.onrender.com', 'http://localhost:3000', 'http://localhost:3001']
+      : "*",
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
@@ -488,8 +502,10 @@ io.on("connection", socket => {
   });
 });
 
-server.listen(5001, () => {
-  console.log("🚀 Server running on port 5001");
+const PORT = process.env.PORT || 5001;
+
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
   console.log("📹 WebRTC signaling server ready - ADMIN PRIVILEGES ENABLED");
   console.log("👑 Admin can remove participants and end meetings");
   console.log("💬 Chat and reactions enabled");

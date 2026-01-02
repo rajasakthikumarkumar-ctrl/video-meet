@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
+import { SOCKET_URL } from '../config';
 import './VideoCall.css';
 
 function VideoCall() {
@@ -87,7 +88,7 @@ function VideoCall() {
       }
       
       // Initialize socket connection
-      socketRef.current = io('http://localhost:5001', {
+      socketRef.current = io(SOCKET_URL, {
         forceNew: true, // Force new connection
         transports: ['websocket', 'polling']
       });
